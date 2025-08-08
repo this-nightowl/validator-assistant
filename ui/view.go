@@ -22,7 +22,7 @@ func (m model) View() string {
 			}
 			b.WriteString(fmt.Sprintf("%s %s\n", cursor, itemStyle.Render(choice)))
 		}
-		b.WriteString("\nPress q to quit")
+		b.WriteString("\n[↑/↓] move  [Enter] select  [q] quit")
 		return header + "\n\n" + b.String()
 	case stateCreateValidator:
 		left := fmt.Sprintf("%s\n\n%s", m.fields[m.step].prompt, m.input.View())
@@ -34,7 +34,7 @@ func (m model) View() string {
 			paneStyle.Render(left),
 			paneStyle.Render(previewStyle.Render(preview)),
 		)
-		footer := "\n[Esc] back [Enter] next"
+		footer := "\n[Esc] back  [Enter] next  [Ctrl+C] quit"
 		return header + "\n" + content + footer
 	}
 	return header
