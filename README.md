@@ -47,4 +47,8 @@ validator-assistant/
 └── utils/                  # Shared helpers
 ```
 
+## Full Validator Setup
+
+Need help from a fresh server all the way to a running validator with monitoring?  Follow the [Full Validator Step-by-Step Guide](docs/full-validator-guide.md).
+
 Contributions and feature requests are welcome!
