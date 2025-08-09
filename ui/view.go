@@ -21,9 +21,16 @@ func (m model) View() string {
 
 func (m model) headerView() string {
 	ascii := lipgloss.PlaceHorizontal(m.width, lipgloss.Center, logoStyle.Render(utils.LoadLogo()))
-	functions := lipgloss.PlaceHorizontal(m.width, lipgloss.Center, strings.Join(m.choices, " | "))
+	var functionLine string
+	if m.state != stateMainMenu && m.function != "" {
+		functionLine = lipgloss.PlaceHorizontal(m.width, lipgloss.Center, m.function)
+	}
 	title := lipgloss.PlaceHorizontal(m.width, lipgloss.Center, titleStyle.Render(m.currentTitle()))
-	content := ascii + "\n" + functions + "\n" + title
+	content := ascii
+	if functionLine != "" {
+		content += "\n" + functionLine
+	}
+	content += "\n" + title
 	return headerStyle.Width(m.width).Render(content)
 }
 
@@ -33,7 +40,7 @@ func (m model) footerView() string {
 	case stateMainMenu:
 		help = "[↑/↓] move  [Enter] select  [q] quit"
 	case stateCreateValidator:
-		help = "[Esc] back  [Enter] next  [Ctrl+C] quit"
+		help = "[Esc] menu  [Shift+Tab] prev  [Tab/Enter] next  [Ctrl+C] quit"
 	}
 	return footerStyle.Width(m.width).Render(help)
 }
