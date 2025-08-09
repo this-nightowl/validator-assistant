@@ -43,8 +43,9 @@ func (m model) updateMainMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 			if choice == "Create New Validator" {
 				m.state = stateCreateValidator
+				m.function = choice
 				m.step = 0
-				m.input.SetValue("")
+				m.input.SetValue(m.responses[m.step])
 				m.input.Placeholder = m.fields[m.step].prompt
 				return m, textinput.Blink
 			}
@@ -63,16 +64,28 @@ func (m model) updateCreateValidator(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m, tea.Quit
 		case "esc":
 			m.state = stateMainMenu
+			m.function = ""
 			return m, nil
-		case "enter":
+		case "shift+tab":
+			if m.step > 0 {
+				m.responses[m.step] = m.input.Value()
+				m.fields[m.step].set(&m.cfg, m.input.Value())
+				m.step--
+				m.input.SetValue(m.responses[m.step])
+				m.input.Placeholder = m.fields[m.step].prompt
+			}
+			return m, nil
+		case "tab", "enter":
+			m.responses[m.step] = m.input.Value()
 			m.fields[m.step].set(&m.cfg, m.input.Value())
-			m.step++
-			if m.step >= len(m.fields) {
-				m.state = stateMainMenu
+			if m.step < len(m.fields)-1 {
+				m.step++
+				m.input.SetValue(m.responses[m.step])
+				m.input.Placeholder = m.fields[m.step].prompt
 				return m, nil
 			}
-			m.input.SetValue("")
-			m.input.Placeholder = m.fields[m.step].prompt
+			m.state = stateMainMenu
+			m.function = ""
 			return m, nil
 		}
 	}
