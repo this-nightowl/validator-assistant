@@ -46,8 +46,8 @@ func Start() error {
 			}
 		}
 	}
-	p := tea.NewProgram(initialModel(), tea.WithAltScreen())
-	return p.Start()
+        p := tea.NewProgram(initialModel(), tea.WithAltScreen(), tea.WithMouseAllMotion())
+        return p.Start()
 }
 
 func shellEscape(s string) string {
