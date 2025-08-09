@@ -47,6 +47,7 @@ func (m model) updateMainMenu(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.step = 0
 				m.input.SetValue(m.responses[m.step])
 				m.input.Placeholder = m.fields[m.step].prompt
+				m.input.Focus()
 				return m, textinput.Blink
 			}
 		}
@@ -65,6 +66,7 @@ func (m model) updateCreateValidator(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "esc":
 			m.state = stateMainMenu
 			m.function = ""
+			m.input.Blur()
 			return m, nil
 		case "shift+tab":
 			if m.step > 0 {
@@ -73,6 +75,7 @@ func (m model) updateCreateValidator(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.step--
 				m.input.SetValue(m.responses[m.step])
 				m.input.Placeholder = m.fields[m.step].prompt
+				m.input.Focus()
 			}
 			return m, nil
 		case "tab", "enter":
@@ -82,10 +85,12 @@ func (m model) updateCreateValidator(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.step++
 				m.input.SetValue(m.responses[m.step])
 				m.input.Placeholder = m.fields[m.step].prompt
+				m.input.Focus()
 				return m, nil
 			}
 			m.state = stateMainMenu
 			m.function = ""
+			m.input.Blur()
 			return m, nil
 		}
 	}
