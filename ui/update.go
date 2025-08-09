@@ -6,6 +6,13 @@ import (
 )
 
 func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		return m, nil
+	}
+
 	switch m.state {
 	case stateMainMenu:
 		return m.updateMainMenu(msg)
