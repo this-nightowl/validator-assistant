@@ -16,6 +16,7 @@ func (m model) View() string {
 	case stateCreateValidator:
 		body = m.createValidatorView()
 	}
+	body = bodyStyle.Width(m.width).Render(body)
 	return lipgloss.JoinVertical(lipgloss.Left, m.headerView(), body, m.footerView())
 }
 
