@@ -14,8 +14,18 @@ An interactive terminal user interface for configuring and managing validators o
 - Git
 
 ## Running
+
+To launch the assistant locally, run the project with Go:
+
 ```bash
 go run .
+```
+
+This will start the interactive terminal UI. If you prefer to build a binary first, run:
+
+```bash
+go build -o validator-assistant
+./validator-assistant
 ```
 
 ## Navigation
