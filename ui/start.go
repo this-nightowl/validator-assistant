@@ -1,6 +1,7 @@
 package ui
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"runtime"
@@ -18,9 +19,10 @@ func Start() error {
 			var cmd *exec.Cmd
 			switch runtime.GOOS {
 			case "darwin":
-				cmd = exec.Command("open", "-a", "Terminal", exe)
+				script := fmt.Sprintf(`tell application "Terminal" to do script "%s"`, exe)
+				cmd = exec.Command("osascript", "-e", script)
 			case "windows":
-				cmd = exec.Command("cmd", "/c", "start", exe)
+				cmd = exec.Command("cmd", "/c", "start", "", exe)
 			default:
 				cmd = exec.Command("x-terminal-emulator", "-e", exe)
 			}
