@@ -73,7 +73,6 @@ func (m model) updateMainMenu(msg tea.Msg) (model, tea.Cmd) {
 	}
 	return m, nil
 }
-
 func (m model) updateCreateValidator(msg tea.Msg) (model, tea.Cmd) {
         var cmd tea.Cmd
         m.input, cmd = m.input.Update(msg)
